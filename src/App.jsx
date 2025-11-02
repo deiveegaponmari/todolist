@@ -7,8 +7,9 @@ function App() {
 
   return (
     <>
-    <div className='bg-blue-200 flex justify-center items-center h-screen'>
+    <div className='bg-blue-200 flex  justify-center items-center h-screen'>
     <CreateTask/>
+     
     </div>
     </>
   )

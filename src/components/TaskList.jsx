@@ -11,7 +11,7 @@ function TaskList(props) {
           : props.data.map((list, index) => {
               return (
                 <div key={list.id} className="flex gap-2 ">
-                  <input type="checkbox" />
+                  <input type="checkbox"  checked={list.completed}  onChange={()=>props.toggleItem(list.id)}/>
                   <div className="flex flex-col">
                     <h1>{list.text}</h1>
                     <h5>{list.category}</h5>

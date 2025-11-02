@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TaskList from "./TaskList";
+import Filters from "./Filters";
 
 function CreateTask() {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [task, setTask] = useState("");
   const [editId, setEditId] = useState(null);
+  const [filter,setFilter]=useState("All")
   const addTask = () => {
     if (task.trim() === "") return;
     if (editId) {
@@ -55,6 +57,17 @@ function CreateTask() {
     setData(updated);
     localStorage.setItem("taskList", JSON.stringify(updated));
   }
+  const toggleItem=(id)=>{
+    const updated=data.map((item)=> item.id===id ?{...item,completed:!item.completed}:item
+    )
+    setData(updated);
+    localStorage.setItem("taskList", JSON.stringify(updated));
+    //all task completion
+    const allTask=updated.length>0 && updated.every((item)=>item.completed);
+    if(allTask){
+      alert("Congratulations!!!..Your All Tasks Completed")
+    }
+  }
   return (
     <div className="bg-white w-xl p-5 h-screen mt-30 mb-10">
       <h1 className="text-3xl font-bold ">To Do List</h1>
@@ -80,8 +93,10 @@ function CreateTask() {
         >
           {editId ? "Update Task" : "Add Task"}
         </button>
+       {/*  Filter component */}
+     <Filters/>
         {/* Task list display here */}
-        <TaskList data={data} editItem={editItem} deleteItem={deleteItem} />
+        <TaskList data={data} editItem={editItem} deleteItem={deleteItem} toggleItem={toggleItem} />
       </div>
     </div>
   );
