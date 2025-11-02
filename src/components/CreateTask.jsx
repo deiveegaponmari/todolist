@@ -71,11 +71,14 @@ function CreateTask() {
   const filteredTasks=filter==="completed" ? data.filter((item)=>item.completed)
   :filter==="pending" ? data.filter((itemval)=>!itemval.completed):data;
   return (
-    <div className="bg-white w-xl p-5 h-screen mt-30 mb-10">
-      <h1 className="text-3xl font-bold ">To Do List</h1>
-      <div className="bg-white-200 flex flex-col justify-center">
+    <div className=" w-full h-screen flex justify-center items-center bg-blue-200">
+      <div className="bg-white shadow-xl rounded-xl p-6 w-full max-w-lg">
+           <h1 className="text-3xl font-bold text-center mb-4 text-gray-800 ">To Do List</h1>
+          {/* input section */}
+          <div className="space-y-3">
         {/*  select category */}
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <select value={category} onChange={(e) => setCategory(e.target.value)} 
+          className="border border-gray-400 w-full p-2 rounded-lg focus:outline-blue-500">
           <option value="">Select Category</option>
           <option value="health">Health</option>
           <option value="skill">Skill</option>
@@ -88,13 +91,15 @@ function CreateTask() {
           value={task}
           placeholder="Enter Task Here"
           onChange={(e) => setTask(e.target.value)}
+          className="border border-gray-400 w-full p-2 rounded-lg focus:outline-blue-500"
         />
         <button
-          className="bg-gradient-to-r from-blue-500 to-indigo-200 text-white"
+          className="bg-gradient-to-r from-blue-600 to-indigo-500 text-white rounded-lg w-full py-2"
           onClick={addTask}
         >
           {editId ? "Update Task" : "Add Task"}
         </button>
+        </div>
        {/*  Filter component */}
      <Filters filter={filter} setFilter={setFilter}/>
         {/* Task list display here */}
