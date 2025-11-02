@@ -7,7 +7,7 @@ function TaskList(props) {
       {/* dynamically added list here */}
       {props.data.length === 0 ? (
         <p className="bg-gray-100 rounded py-2 text-center text-gray-800">
-          No Task Added
+          No Task
         </p>
       ) : (
         <ul className="space-y-3">
