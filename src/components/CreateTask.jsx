@@ -5,8 +5,20 @@ function CreateTask() {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [task, setTask] = useState("");
+  const [editId, setEditId] = useState(null);
   const addTask = () => {
     if (task.trim() === "") return;
+    if (editId) {
+      const updatedTask = data.map((item) =>
+        item.id === editId ? { ...item, text: task, category: category } : item
+      );
+      setData(updatedTask);
+      localStorage.setItem("taskList", JSON.stringify(updatedTask));
+      setTask(""); //clear user input
+      setCategory(""); //clear category
+      setEditId(null); //stop editing
+      return;
+    }
     const newTask = {
       id: Date.now(),
       text: task,
@@ -26,13 +38,22 @@ function CreateTask() {
     }
   }, []);
   function editItem(index) {
-    console.log("index is",index);
-    
+    console.log("index is", index);
+    const edited = data.find((edit) => edit.id === index);
+    setCategory(edited.category);
+    setTask(edited.text);
+    setEditId(index);
+    //console.log(edited.text)
+    /*  if(edited){
+      edited.map((item)=>{
+        return console.log(item.text)
+      })
+    } */
   }
   function deleteItem(index) {
-   const updated= data.filter((list)=>list.id!==index)
+    const updated = data.filter((list) => list.id !== index);
     setData(updated);
-    localStorage.setItem("taskList",JSON.stringify(updated))
+    localStorage.setItem("taskList", JSON.stringify(updated));
   }
   return (
     <div className="bg-white w-xl p-5 h-screen mt-30 mb-10">
@@ -57,7 +78,7 @@ function CreateTask() {
           className="bg-gradient-to-r from-blue-500 to-indigo-200 text-white"
           onClick={addTask}
         >
-          Add Task
+          {editId ? "Update Task" : "Add Task"}
         </button>
         {/* Task list display here */}
         <TaskList data={data} editItem={editItem} deleteItem={deleteItem} />
