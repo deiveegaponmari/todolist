@@ -7,7 +7,7 @@ function CreateTask() {
   const [category, setCategory] = useState("");
   const [task, setTask] = useState("");
   const [editId, setEditId] = useState(null);
-  const [filter,setFilter]=useState("All")
+  const [filter,setFilter]=useState("all")
   const addTask = () => {
     if (task.trim() === "") return;
     if (editId) {
@@ -68,6 +68,8 @@ function CreateTask() {
       alert("Congratulations!!!..Your All Tasks Completed")
     }
   }
+  const filteredTasks=filter==="completed" ? data.filter((item)=>item.completed)
+  :filter==="pending" ? data.filter((itemval)=>!itemval.completed):data;
   return (
     <div className="bg-white w-xl p-5 h-screen mt-30 mb-10">
       <h1 className="text-3xl font-bold ">To Do List</h1>
@@ -94,9 +96,9 @@ function CreateTask() {
           {editId ? "Update Task" : "Add Task"}
         </button>
        {/*  Filter component */}
-     <Filters/>
+     <Filters filter={filter} setFilter={setFilter}/>
         {/* Task list display here */}
-        <TaskList data={data} editItem={editItem} deleteItem={deleteItem} toggleItem={toggleItem} />
+        <TaskList data={filteredTasks} editItem={editItem} deleteItem={deleteItem} toggleItem={toggleItem} />
       </div>
     </div>
   );
